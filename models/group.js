@@ -11,10 +11,9 @@ const groupSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "Event",
-        required: true,
       },
     ],
-    users: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
+    users: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,

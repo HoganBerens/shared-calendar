@@ -1,14 +1,9 @@
 import "./NewEvent.css";
 import axios from "axios";
-import { useState } from "react";
+import { config } from "../../utilities/configs";
 
 const NewEvent = ({ user }) => {
   const Event_BASE_URL = "/newEvent";
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
 
   const handleNewEvent = (event) => {
     event.preventDefault();
