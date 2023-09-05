@@ -9,6 +9,8 @@ export default function NavBar({ user, setUser }) {
 
   return (
     <nav>
+      <Link to="/newEvent">New Event</Link>&nbsp; | &nbsp;
+      <Link to="/newGroup">New Group</Link>&nbsp; | &nbsp;
       <span> Welcome, {user.name} to Shared Calendar!</span>
       &nbsp; | &nbsp;
       <Link to="" onClick={handleLogOut}>

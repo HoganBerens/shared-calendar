@@ -5,27 +5,29 @@ const eventSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
     },
     content: {
       type: String,
-      required: true,
     },
     groups: [
       {
         type: Schema.Types.ObjectId,
         ref: "Group",
-        required: true,
       },
     ],
     date: {
       type: Date,
-      required: true,
     },
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.password;
+        return ret;
+      },
+    },
   }
 );
 
