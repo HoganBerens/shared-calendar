@@ -2,13 +2,13 @@ import "./NewGroup.css";
 import axios from "axios";
 import { config } from "../../utilities/configs";
 
-const NewGroup = () => {
+const NewGroup = ({ user }) => {
   const Group_BASE_URL = "/newGroup";
 
   const handleNewGroup = (event) => {
     event.preventDefault();
     axios
-      .post(Group_BASE_URL, { title: event.target[0].value }, config)
+      .post(Group_BASE_URL, { title: event.target[0].value, user: user }, config)
       .then((response) => {
         console.log(response);
       })

@@ -18,7 +18,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/newEvent" element={<NewEvent user={user} />} />
-            <Route path="/newGroup" element={<NewGroup />} />
+            <Route path="/newGroup" element={<NewGroup user={user} />} />
           </Routes>
         </>
       ) : (

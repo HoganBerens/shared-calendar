@@ -9,6 +9,7 @@ export default function NavBar({ user, setUser }) {
 
   return (
     <nav>
+      <Link to="/">Home</Link>&nbsp; | &nbsp;
       <Link to="/newEvent">New Event</Link>&nbsp; | &nbsp;
       <Link to="/newGroup">New Group</Link>&nbsp; | &nbsp;
       <span> Welcome, {user.name} to Shared Calendar!</span>
