@@ -34,6 +34,7 @@ const userSchema = new Schema(
         required: true,
       },
     ],
+    userID: { type: Number },
   },
   {
     timestamps: true,

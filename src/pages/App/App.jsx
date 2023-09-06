@@ -16,7 +16,7 @@ export default function App() {
         <>
           <NavBar user={user} setUser={setUser} />
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/newEvent" element={<NewEvent user={user} />} />
             <Route path="/newGroup" element={<NewGroup user={user} />} />
           </Routes>

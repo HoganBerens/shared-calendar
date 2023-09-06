@@ -4,6 +4,6 @@ const eventsCtrl = require("../../controllers/api/events");
 
 router.post("/newEvent", eventsCtrl.create);
 
-router.get("/events", eventsCtrl.show);
+router.get("/events/:id", eventsCtrl.show);
 
 module.exports = router;

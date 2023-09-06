@@ -18,7 +18,7 @@ const eventSchema = new Schema(
     date: {
       type: Date,
     },
-    user: { type: Schema.Types.ObjectId, ref: "User" },
+    user: { type: Number },
   },
   {
     timestamps: true,

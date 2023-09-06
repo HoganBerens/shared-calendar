@@ -6,16 +6,14 @@ async function create(req, res) {
     title: req.body.title,
     content: req.body.content,
     date: req.body.date,
-    user: user,
+    user: user.userID,
   });
-  user.events.push(event);
-  user.save();
   res.json(event);
 }
 
 async function show(req, res) {
-  let events = Event.find({ user: req.user });
-  console.log(events);
+  let events = await Event.find({ user: req.params.id }).exec();
+  res.send(events);
 }
 
 module.exports = {

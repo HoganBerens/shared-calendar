@@ -8,6 +8,7 @@ export default class SignUpForm extends Component {
     password: "",
     confirm: "",
     error: "",
+    userID: Math.floor(Math.random() * 10000),
   };
 
   handleSubmit = async (event) => {
