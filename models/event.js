@@ -18,6 +18,7 @@ const eventSchema = new Schema(
     date: {
       type: Date,
     },
+    time: { type: String },
     user: { type: Number },
   },
   {

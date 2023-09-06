@@ -6,6 +6,7 @@ async function create(req, res) {
     title: req.body.title,
     content: req.body.content,
     date: req.body.date,
+    time: req.body.time,
     user: user.userID,
   });
   res.json(event);

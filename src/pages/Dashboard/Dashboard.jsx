@@ -5,12 +5,14 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
 const Dashboard = ({ user }) => {
-  const [events, setEvents] = useState([]);
+  const [userEvents, setUserEvents] = useState([]);
+  const [] = useState(false);
 
   useEffect(() => {
     axios
       .get(`/events/${user.userID}`)
       .then((response) => {
+        setUserEvents(response.data);
         console.log(response.data);
       })
       .catch((error) => {
@@ -20,7 +22,7 @@ const Dashboard = ({ user }) => {
 
   return (
     <div>
-      <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
+      <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" events={userEvents} />
     </div>
   );
 };
