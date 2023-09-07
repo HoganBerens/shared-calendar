@@ -3,4 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+}
+
+.newEvent-form {
+  max-width: 40%;
 }

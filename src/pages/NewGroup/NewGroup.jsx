@@ -16,11 +16,11 @@ const NewGroup = ({ user }) => {
   };
 
   return (
-    <div>
-      <div>Good Morning</div>
-      <form onSubmit={handleNewGroup} action="/groups">
+    <div className="newGroup-container">
+      <h1>New Group</h1>
+      <form onSubmit={handleNewGroup} action="/groups" className="newGroup-form">
         <input type="text" name="title" placeholder="Group Title" />
-        <button type="submit">Create Event</button>
+        <button type="submit">Create Group</button>
       </form>
     </div>
   );
