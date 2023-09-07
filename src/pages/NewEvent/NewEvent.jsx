@@ -17,8 +17,7 @@ const NewEvent = ({ user }) => {
   };
 
   return (
-    <div>
-      <div>New Event</div>
+    <div className="newEvent-container">
       <form onSubmit={handleNewEvent} action="/events">
         <input type="text" name="title" placeholder="Event Title" />
         <input type="text" name="content" placeholder="Event Content" />
