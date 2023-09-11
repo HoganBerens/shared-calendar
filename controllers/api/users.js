@@ -35,6 +35,12 @@ function checkToken(req, res) {
   res.json(req.exp);
 }
 
+function search(req, res) {
+  let users = User.find({ user: req.params.search });
+  console.log(users);
+  res.send(users);
+}
+
 // helper functions
 function createJWT(user) {
   return jwt.sign(
@@ -49,4 +55,5 @@ module.exports = {
   create,
   login,
   checkToken,
+  search,
 };

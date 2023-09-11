@@ -13,8 +13,8 @@ const groupSchema = new Schema(
         ref: "Event",
       },
     ],
-    users: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    user: { type: Schema.Types.ObjectId, ref: "User" },
+    users: { type: Array },
+    user: { type: Number },
   },
   {
     timestamps: true,

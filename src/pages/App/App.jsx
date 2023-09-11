@@ -10,6 +10,7 @@ import NewGroup from "../NewGroup/NewGroup";
 
 export default function App() {
   const [user, setUser] = useState(getUser());
+
   return (
     <main className="App">
       {user ? (
@@ -18,7 +19,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/newEvent" element={<NewEvent user={user} />} />
-            <Route path="/newGroup" element={<NewGroup user={user} />} />
+            <Route path="/groups" element={<NewGroup user={user} />} />
           </Routes>
         </>
       ) : (

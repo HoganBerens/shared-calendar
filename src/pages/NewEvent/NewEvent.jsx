@@ -7,7 +7,6 @@ const NewEvent = ({ user }) => {
 
   const handleNewEvent = (event) => {
     event.preventDefault();
-
     axios
       .post(Event_BASE_URL, { title: event.target[0].value, content: event.target[1].value, date: event.target[2].value, time: event.target[3].value, user: user }, config)
       .then((response) => {
