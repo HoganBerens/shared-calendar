@@ -1,36 +1,53 @@
 import "./ShowGroup.css";
 import { useState } from "react";
 import { debounce } from "../../utilities/search-user";
+import axios from "axios";
 
 function ShowGroup({ group, setGroup }) {
   const [searchResults, setSearchResults] = useState([]);
-  const [hasSearched, setHasSearched] = useState(false);
+  const [name, setName] = useState("");
 
-  let handleSearchUsers = debounce((event) => {
-    if (event.target.value) {
-      fetch(`/api/users/search/${event.target.value}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data && data.results) {
-            setSearchResults(data.results);
-            setHasSearched(true);
-          }
-        })
-        .catch((err) => console.error(err));
-    } else {
-      setHasSearched(false);
-      setSearchResults([]);
-    }
-  }, 1000);
+  const handleSearchUsers = async (event) => {
+    event.preventDefault();
+    axios
+      .get(`/api/users/search?name=${name}`)
+      .then((response) => {
+        if (response.data[0]) {
+          setSearchResults(response.data);
+          console.log(response.data);
+        } else {
+          setSearchResults({});
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleAddToGroup = (user) => {
+    user.groups.push(group);
+    user.save();
+    console.log(user);
+  };
 
   return (
     <div>
       <div>Group: {group.title}</div>
       <div>Add Users to Group</div>
-      <form>
-        <input type="text" onChange={handleSearchUsers} />
+      <form onSubmit={handleSearchUsers}>
+        <input placeholder="Seach for a user by name" type="text" onChange={(e) => setName(e.target.value)} />
+        <button type="submit">Add User</button>
       </form>
-      <div>Search Results: {searchResults}</div>
+      {searchResults.length ? (
+        <div>
+          {searchResults.map((user, index) => (
+            <div onClick={handleAddToGroup.bind(this, user)} key={index}>
+              {user.name}
+              Add to Group
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>No Users Found</div>
+      )}
       <button
         onClick={() => {
           setGroup({});

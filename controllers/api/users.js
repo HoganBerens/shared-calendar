@@ -35,10 +35,15 @@ function checkToken(req, res) {
   res.json(req.exp);
 }
 
-function search(req, res) {
-  let users = User.find({ user: req.params.search });
-  console.log(users);
-  res.send(users);
+async function search(req, res) {
+  let userQuery = req.query.name ? { name: new RegExp(req.query.name, "i") } : {};
+  User.find(userQuery)
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 // helper functions
