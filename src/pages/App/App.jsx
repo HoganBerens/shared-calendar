@@ -9,10 +9,13 @@ import NewEvent from "../NewEvent/NewEvent";
 import NewGroup from "../NewGroup/NewGroup";
 import ShowGroup from "../ShowGroup/ShowGroup";
 import ShowEvent from "../ShowEvent/ShowEvent";
+import EditEvent from "../EditEvent/EditEvent";
+import DeleteEvent from "../DeleteEvent/DeleteEvent";
 
 export default function App() {
   const [user, setUser] = useState(getUser());
-  const [group, setGroup] = useState({});
+  const [group, setGroup] = useState();
+  const [event, setEvent] = useState();
 
   return (
     <main className="App">
@@ -20,9 +23,11 @@ export default function App() {
         <>
           <NavBar user={user} setUser={setUser} />
           <Routes>
-            <Route path="/" element={<Dashboard user={user} />} />
+            <Route path="/" element={<Dashboard user={user} setEvent={setEvent} />} />
             <Route path="/newEvent" element={<NewEvent user={user} />} />
-            <Route path="/event" element={<ShowEvent />} />
+            <Route path="/event" element={<ShowEvent event={event} setEvent={setEvent} />} />
+            <Route path="/events/:id/edit" element={<EditEvent user={user} setEvent={setEvent} event={event} />} />
+            <Route path="/events/:id/delete" element={<DeleteEvent user={user} setEvent={setEvent} event={event} />} />
             <Route path="/groups" element={<NewGroup user={user} setGroup={setGroup} />} />
             <Route path="/groups/addUsers" element={<ShowGroup user={user} group={group} />} />
           </Routes>

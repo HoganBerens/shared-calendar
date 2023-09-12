@@ -1,18 +1,16 @@
 import "./NewEvent.css";
 import axios from "axios";
 import { config } from "../../utilities/configs";
+import { useNavigate } from "react-router-dom";
 
 const NewEvent = ({ user }) => {
   const Event_BASE_URL = "/newEvent";
+  const navigate = useNavigate();
 
   const handleNewEvent = (event) => {
     event.preventDefault();
-    axios
-      .post(Event_BASE_URL, { title: event.target[0].value, content: event.target[1].value, startDate: event.target[2].value, endDate: event.target[3].value, time: event.target[4].value, user: user }, config)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => console.log(error));
+    axios.post(Event_BASE_URL, { title: event.target[0].value, content: event.target[1].value, startDate: event.target[2].value, endDate: event.target[3].value, time: event.target[4].value, user: user }, config).catch((error) => console.log(error));
+    navigate(`/`);
   };
 
   return (

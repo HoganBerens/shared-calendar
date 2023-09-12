@@ -6,14 +6,15 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useNavigate } from "react-router-dom";
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ user, setEvent }) => {
   const navigate = useNavigate();
   const [events, setEvents] = useState();
   const localizer = momentLocalizer(moment);
   let userEvents;
 
   const handleSelectEvent = (event) => {
-    navigate("/event", { state: { event: event, user: user } });
+    setEvent(event);
+    navigate("/event", { state: { user: user } });
   };
 
   useEffect(() => {

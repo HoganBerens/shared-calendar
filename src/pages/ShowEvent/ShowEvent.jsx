@@ -1,14 +1,24 @@
 import "./ShowEvent.css";
-import { useLocation } from "react-router-dom";
-import moment from "moment";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function ShowEvent() {
+function ShowEvent({ event, setEvent }) {
   const location = useLocation();
   let user = location.state.user;
-  let event = location.state.event;
+  const navigate = useNavigate();
+
+  const handleEditEvent = () => {
+    setEvent(event);
+    navigate(`/events/${event._id}/edit`, { state: { user: user } });
+  };
+
+  const handleDeleteEvent = () => {
+    setEvent(event);
+    navigate(`/events/${event._id}/delete`);
+  };
 
   return (
     <div>
+      <form></form>
       <div>Event Details</div>
       <div>Creator: {user.name}</div>
       <div>Title: {event.title}</div>
@@ -16,6 +26,8 @@ function ShowEvent() {
       <div>Start Date: {event.startDate}</div>
       <div>End Date: {event.endDate}</div>
       <div>Time: {event.time}</div>
+      <div onClick={handleEditEvent}>Edit</div>
+      <div onClick={handleDeleteEvent}>Delete</div>
     </div>
   );
 }
