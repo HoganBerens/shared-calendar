@@ -11,4 +11,6 @@ router.post("/login", usersCtrl.login);
 
 router.get("/check-token", ensureLoggedIn, usersCtrl.checkToken);
 
+router.post("/addToGroup", usersCtrl.addToGroup);
+
 module.exports = router;

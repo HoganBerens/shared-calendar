@@ -1,11 +1,13 @@
 const Event = require("../../models/event");
 const User = require("../../models/user");
+const moment = require("moment");
 
 async function create(req, res) {
   const event = await Event.create({
     title: req.body.title,
     content: req.body.content,
-    date: req.body.date,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
     time: req.body.time,
     user: req.body.user.userID,
   });
@@ -13,7 +15,6 @@ async function create(req, res) {
     .then((user) => {
       user[0].events.push(event);
       user[0].save();
-      console.log(user[0]);
     })
     .catch((error) => {
       console.log({ error });

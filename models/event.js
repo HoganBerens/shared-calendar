@@ -15,9 +15,8 @@ const eventSchema = new Schema(
         ref: "Group",
       },
     ],
-    date: {
-      type: Date,
-    },
+    startDate: {},
+    endDate: {},
     time: { type: String },
     user: { type: Number },
   },

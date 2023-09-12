@@ -45,6 +45,16 @@ async function search(req, res) {
       console.log(error);
     });
 }
+async function addToGroup(req, res) {
+  let user = await User.find({ useriD: req.user })
+    .then((user) => {
+      console.log(req.body);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+  res.json(user);
+}
 
 // helper functions
 function createJWT(user) {
@@ -61,4 +71,5 @@ module.exports = {
   login,
   checkToken,
   search,
+  addToGroup,
 };

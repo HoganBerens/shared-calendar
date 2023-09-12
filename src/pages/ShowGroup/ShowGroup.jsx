@@ -1,9 +1,10 @@
 import "./ShowGroup.css";
 import { useState } from "react";
-import { debounce } from "../../utilities/search-user";
 import axios from "axios";
+import { config } from "../../utilities/configs";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
-function ShowGroup({ group, setGroup }) {
+function ShowGroup({ group }) {
   const [searchResults, setSearchResults] = useState([]);
   const [name, setName] = useState("");
 
@@ -14,7 +15,6 @@ function ShowGroup({ group, setGroup }) {
       .then((response) => {
         if (response.data[0]) {
           setSearchResults(response.data);
-          console.log(response.data);
         } else {
           setSearchResults({});
         }
@@ -22,10 +22,14 @@ function ShowGroup({ group, setGroup }) {
       .catch((err) => console.log(err));
   };
 
-  const handleAddToGroup = (user) => {
-    user.groups.push(group);
-    user.save();
-    console.log(user);
+  const handleAddToGroup = (event, user, group) => {
+    event.preventDefault();
+    axios
+      .post("/api/users/addToGroup", { user: user, group: group }, config)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -39,22 +43,15 @@ function ShowGroup({ group, setGroup }) {
       {searchResults.length ? (
         <div>
           {searchResults.map((user, index) => (
-            <div onClick={handleAddToGroup.bind(this, user)} key={index}>
-              {user.name}
-              Add to Group
-            </div>
+            <form onSubmit={handleAddToGroup.bind(user)} action="/groups/addUsers">
+              <div>{user.name}</div>
+              <button type="submit">Add To Group</button>
+            </form>
           ))}
         </div>
       ) : (
         <div>No Users Found</div>
       )}
-      <button
-        onClick={() => {
-          setGroup({});
-        }}
-      >
-        Create New Group
-      </button>
     </div>
   );
 }
