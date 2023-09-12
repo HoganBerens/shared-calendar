@@ -8,6 +8,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import NewEvent from "../NewEvent/NewEvent";
 import NewGroup from "../NewGroup/NewGroup";
 import ShowGroup from "../ShowGroup/ShowGroup";
+import ShowEvent from "../ShowEvent/ShowEvent";
 
 export default function App() {
   const [user, setUser] = useState(getUser());
@@ -21,6 +22,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/newEvent" element={<NewEvent user={user} />} />
+            <Route path="/event" element={<ShowEvent />} />
             <Route path="/groups" element={<NewGroup user={user} setGroup={setGroup} />} />
             <Route path="/groups/addUsers" element={<ShowGroup user={user} group={group} />} />
           </Routes>
