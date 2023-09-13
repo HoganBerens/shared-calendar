@@ -1,13 +1,14 @@
 /* CSS Custom Properties */
 :root {
   --white: #ffffff;
-  --tan-1: #fbf9f6;
+  --tan-1: #2d545e;
   --tan-2: #e7e2dd;
   --tan-3: #e2d9d1;
   --tan-4: #d3c1ae;
   --orange: #f67f00;
   --text-light: #968c84;
   --text-dark: #615954;
+  height: 100vh;
 }
 
 *,
@@ -21,8 +22,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(244, 244, 244);
-  padding: 2vmin;
+  background-color: #fafafa;
+
   height: 100vh;
 }
 
@@ -77,27 +78,20 @@ code {
   font-size: 2vmin;
 }
 
-.form-container {
-  padding: 3vmin;
-  background-color: var(--tan-1);
-  border: 0.1vmin solid var(--tan-3);
-  border-radius: 1vmin;
-}
-
 p.error-message {
   color: var(--orange);
   text-align: center;
-}
-
-form {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 1.25vmin;
-  color: var(--text-light);
 }
 
 label {
   font-size: 2vmin;
   display: flex;
   align-items: center;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  cursor: pointer;
 }

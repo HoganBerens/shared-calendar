@@ -1,0 +1,25 @@
+.auth-main {
+  display: flex;
+  min-height: 90%;
+  min-width: 70%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 60%;
+  min-height: 50%;
+  max-width: 40%;
+  align-items: center;
+}
+
+.auth-button {
+  min-height: 10%;
+  min-width: 20%;
+  max-height: 15%;
+  max-width: 20%;
+  border-radius: 50px;
+  align-self: center;
+}

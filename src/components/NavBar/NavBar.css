@@ -1,0 +1,10 @@
+.navbar-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 20%;
+  min-height: 5%;
+  background-color: var(--tan-1);
+  font-size: 20px;
+  align-items: center;
+  color: white;
+}
