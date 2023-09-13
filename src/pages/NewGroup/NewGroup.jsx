@@ -31,8 +31,8 @@ const NewGroup = ({ user, setGroup, group }) => {
   }, []);
 
   return (
-    <div className="newGroup-container">
-      <div>
+    <div className="newGroup-wrapper">
+      <div className="newGroup-container">
         <h1>New Group</h1>
         <form onSubmit={handleNewGroup} action="/groups" className="newGroup-form">
           <input type="text" name="title" placeholder="Group Title" />

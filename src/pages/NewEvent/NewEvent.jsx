@@ -14,18 +14,31 @@ const NewEvent = ({ user }) => {
   };
 
   return (
-    <div className="newEvent-container">
-      <h1>New Event</h1>
-      <form className="newEvent-form" onSubmit={handleNewEvent} action="/events">
-        <input type="text" name="title" placeholder="Event Title" />
-        <input type="text" name="content" placeholder="Event Content" />
-        <span>Start Date</span>
-        <input type="date" name="startdate" />
-        <span>End Date</span>
-        <input type="date" name="enddate" />
-        <input type="time" name="time" />
-        <button type="submit">Create Event</button>
-      </form>
+    <div className="newEvent-wrapper">
+      <div className="newEvent-container">
+        <h1>New Event</h1>
+        <form className="newEvent-form" onSubmit={handleNewEvent} action="/events">
+          <div>
+            <input className="newEvent-input" type="text" name="title" placeholder="Event Title" />
+            <input className="newEvent-input" type="text" name="content" placeholder="Event Content" />
+          </div>
+          <div>
+            <span>Start Date</span>
+            <input className="newEvent-input" type="date" name="startdate" />
+          </div>
+          <div>
+            <span>End Date</span>
+            <input className="newEvent-input" type="date" name="enddate" />
+          </div>
+          <div>
+            <span>Time</span>
+            <input className="newEvent-input" type="time" name="time" />
+          </div>
+          <button className="newEvent-button" type="submit">
+            Create Event
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

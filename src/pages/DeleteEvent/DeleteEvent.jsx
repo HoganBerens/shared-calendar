@@ -18,10 +18,18 @@ function DeleteEvent({ event }) {
   };
 
   return (
-    <div>
-      Are you sure you want to delete event: {event.title}
-      <div onClick={handleDeleteEvent}>Yes, Delete</div>
-      <div onClick={handleDontDelete}>No</div>
+    <div className="deleteEvent-wrapper">
+      <div className="deleteEvent-container">
+        <div className="deleteEvent-item">Are you sure you want to delete event: {event.title}</div>
+        <div className="deleteEvent-button-container">
+          <div className="deleteEvent-item" onClick={handleDeleteEvent}>
+            Yes, Delete
+          </div>
+          <div className="deleteEvent-item" onClick={handleDontDelete}>
+            No
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -21,18 +21,31 @@ function EditEvent({ user }) {
   };
 
   return (
-    <div>
-      <h1>Edit Event</h1>
-      <form className="newEvent-form" onSubmit={handleEditEvent} action="/events/edit">
-        <input type="text" name="title" placeholder="Event Title" />
-        <input type="text" name="content" placeholder="Event Content" />
-        <span>Start Date</span>
-        <input type="date" name="startdate" />
-        <span>End Date</span>
-        <input type="date" name="enddate" />
-        <input type="time" name="time" />
-        <button type="submit">Update Event</button>
-      </form>
+    <div className="editEvent-wrapper">
+      <div className="editEvent-container">
+        <h1>Edit Event</h1>
+        <form className="editEvent-form" onSubmit={handleEditEvent} action="/events/edit">
+          <div>
+            <input className="editEvent-input" type="text" name="title" placeholder="Event Title" />
+            <input type="text" name="content" placeholder="Event Content" />
+          </div>
+          <div>
+            <span>Start Date</span>
+            <input className="editEvent-input" type="date" name="startdate" />
+          </div>
+          <div>
+            <span>End Date</span>
+            <input className="editEvent-input" type="date" name="enddate" />
+          </div>
+          <div>
+            <span>Time</span>
+            <input className="editEvent-input" type="time" name="time" />
+          </div>
+          <button className="editEvent-button" type="submit">
+            Update Event
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

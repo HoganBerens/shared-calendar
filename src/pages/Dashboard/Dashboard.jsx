@@ -10,7 +10,7 @@ const Dashboard = ({ user, setEvent }) => {
   const navigate = useNavigate();
   const [events, setEvents] = useState();
   const localizer = momentLocalizer(moment);
-  let userEvents;
+  let userEvents = events;
 
   const handleSelectEvent = (event) => {
     setEvent(event);

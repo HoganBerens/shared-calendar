@@ -83,15 +83,13 @@ p.error-message {
   text-align: center;
 }
 
-label {
-  font-size: 2vmin;
-  display: flex;
-  align-items: center;
-}
 a {
   color: white;
   text-decoration: none;
 }
 a:hover {
+  cursor: pointer;
+}
+button:hover {
   cursor: pointer;
 }
