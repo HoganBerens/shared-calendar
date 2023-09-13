@@ -1,6 +1,6 @@
 # Shared-Calendar
 
-Shared-Calendar is a functioning calendar where you can store your previous and upcoming events in one place. Utilize the groups feature to create a group with your friends/family so all member's events can be seen together.
+Shared-Calendar is a functioning calendar where you can store your previous and upcoming events in one place. 
 
 Screenshots
 <img src="https://i.imgur.com/cexZro6.png">
