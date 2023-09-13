@@ -16,7 +16,7 @@ Screenshots
 - MongoDB
 - HTML
 - CSS
-- React-Big-Calendar API
+
 
 # Getting Started
 
