@@ -3,10 +3,16 @@ import { useState } from "react";
 import axios from "axios";
 import { config } from "../../utilities/configs";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 
-function ShowGroup({ group }) {
+function ShowGroup() {
   const [searchResults, setSearchResults] = useState([]);
   const [name, setName] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const selectedGroup = location.state.group;
+  const users = selectedGroup.users;
+  let { id } = useParams();
 
   const handleSearchUsers = async (event) => {
     event.preventDefault();
@@ -22,19 +28,19 @@ function ShowGroup({ group }) {
       .catch((err) => console.log(err));
   };
 
-  const handleAddToGroup = (event, user, group) => {
-    event.preventDefault();
+  const handleAddToGroup = (user) => {
     axios
-      .post("/api/users/addToGroup", { user: user, group: group }, config)
+      .put(`/groups/${id}/addUser`, { user: user, users: users }, config)
       .then((response) => {
         console.log(response);
       })
       .catch((error) => console.log(error));
+    navigate(-1);
   };
 
   return (
     <div>
-      <div>Group: {group.title}</div>
+      <div>Group: {selectedGroup.title}</div>
       <div>Add Users to Group</div>
       <form onSubmit={handleSearchUsers}>
         <input placeholder="Seach for a user by name" type="text" onChange={(e) => setName(e.target.value)} />
@@ -43,10 +49,9 @@ function ShowGroup({ group }) {
       {searchResults.length ? (
         <div>
           {searchResults.map((user, index) => (
-            <form onSubmit={handleAddToGroup.bind(user)} action="/groups/addUsers">
-              <div>{user.name}</div>
-              <button type="submit">Add To Group</button>
-            </form>
+            <div key={index} onClick={handleAddToGroup.bind(this, user)}>
+              {user.name}
+            </div>
           ))}
         </div>
       ) : (

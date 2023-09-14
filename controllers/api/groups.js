@@ -2,19 +2,22 @@ const Group = require("../../models/group");
 const User = require("../../models/user");
 
 async function create(req, res) {
-  const group = await Group.create({
+  let user = await User.findById(req.body.user._id);
+  let group;
+  Group.create({
     title: req.body.title,
-    user: req.body.user.userID,
-  });
-  User.find({ userID: req.body.user.userID })
-    .then((user) => {
-      user[0].groups.push(group);
-      user[0].save();
+    user: user,
+  })
+    .then((people) => {
+      people.users.push(user);
+      people.save();
+      group = people.toJSON();
     })
-    .catch((error) => {
-      console.log({ error });
+    .then(() => {
+      user.groups.push(group);
+      user.save();
     });
-  res.json(group);
+  res.send(group);
 }
 
 async function getAll(req, res) {
@@ -34,8 +37,14 @@ async function show(req, res) {
   res.send(group);
 }
 
+async function addUser(req, res) {
+  let group = await Group.findByIdAndUpdate(req.params.id, { users: { users: [req.body.users, req.body.user] } }, { new: true });
+  res.json(group);
+}
+
 module.exports = {
   create,
   getAll,
   show,
+  addUser,
 };

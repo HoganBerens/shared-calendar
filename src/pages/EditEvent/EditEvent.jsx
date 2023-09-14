@@ -1,8 +1,7 @@
 import "./EditEvent.css";
 import axios from "axios";
 import { config } from "../../utilities/configs";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function EditEvent({ user }) {
   let { id } = useParams();
@@ -12,10 +11,10 @@ function EditEvent({ user }) {
     event.preventDefault();
     axios
       .put(`/events/${id}/edit`, { title: event.target[0].value, content: event.target[1].value, startDate: event.target[2].value, endDate: event.target[3].value, time: event.target[4].value, user: user }, config)
-      .then((response) => {})
-      .then((data) => {
-        console.log(data);
+      .then((response) => {
+        console.log(response);
       })
+
       .catch((error) => console.log(error));
     navigate("/");
   };

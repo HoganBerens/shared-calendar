@@ -2,9 +2,12 @@ import "./NewGroup.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { config } from "../../utilities/configs";
+import { useParams, useNavigate } from "react-router-dom";
 
 const NewGroup = ({ user, setGroup, group }) => {
   const [userGroups, setUserGroups] = useState([]);
+  let navigate = useNavigate();
+  let usersGroups;
 
   const Group_BASE_URL = "/groups";
 
@@ -18,17 +21,24 @@ const NewGroup = ({ user, setGroup, group }) => {
       .catch((error) => console.log(error));
   };
 
+  const handleSelectGroup = (group) => {
+    setGroup(group);
+    navigate(`/groups/${group._id}`, { state: { group: group } });
+    console.log(group);
+  };
+
   useEffect(() => {
     axios
       .get(`/groups/${user.userID}`)
       .then((response) => {
         setGroup({});
-        setUserGroups(response.data);
+        usersGroups = response.data;
+        setUserGroups(usersGroups);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [usersGroups]);
 
   return (
     <div className="newGroup-wrapper">
@@ -43,15 +53,8 @@ const NewGroup = ({ user, setGroup, group }) => {
         <div>Groups:</div>
         {userGroups.length ? (
           userGroups.map((group, index) => (
-            <div
-              key={index}
-              onClick={() => {
-                setGroup(group);
-              }}
-            >
-              <a href="/groups/addUsers" key={index}>
-                <span>{group.title}</span>
-              </a>
+            <div onClick={handleSelectGroup.bind(this, group)} key={index}>
+              <span>{group.title}</span>
             </div>
           ))
         ) : (
