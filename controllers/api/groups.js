@@ -9,7 +9,7 @@ async function create(req, res) {
     user: user,
   })
     .then((people) => {
-      people.users.push(user);
+      people.users.prevUsers.push(user);
       people.save();
       group = people.toJSON();
     })
@@ -23,9 +23,7 @@ async function create(req, res) {
 async function getAll(req, res) {
   User.find({ userID: req.params.id })
     .then((user) => {
-      let groups = user[0].groups;
-
-      res.send(groups);
+      res.send(user[0].groups);
     })
     .catch((error) => {
       console.log({ error });
@@ -38,7 +36,7 @@ async function show(req, res) {
 }
 
 async function addUser(req, res) {
-  let group = await Group.findByIdAndUpdate(req.params.id, { users: { users: [req.body.users, req.body.user] } }, { new: true });
+  let group = await Group.findByIdAndUpdate(req.params.id, { users: { prevUsers: req.body.users, newUser: req.body.user } }, { new: true });
   res.json(group);
 }
 

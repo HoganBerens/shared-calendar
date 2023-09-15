@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import { config } from "../../utilities/configs";
 import { useParams, useNavigate } from "react-router-dom";
 
-const NewGroup = ({ user, setGroup, group }) => {
+const NewGroup = ({ user, setGroup, usersGroups }) => {
   const [userGroups, setUserGroups] = useState([]);
   let navigate = useNavigate();
-  let usersGroups;
 
   const Group_BASE_URL = "/groups";
 
@@ -16,7 +15,8 @@ const NewGroup = ({ user, setGroup, group }) => {
     axios
       .post(Group_BASE_URL, { title: event.target[0].value, user: user }, config)
       .then((response) => {
-        setUserGroups(response);
+        usersGroups.push(response);
+        setUserGroups(usersGroups);
       })
       .catch((error) => console.log(error));
   };
@@ -31,7 +31,6 @@ const NewGroup = ({ user, setGroup, group }) => {
     axios
       .get(`/groups/${user.userID}`)
       .then((response) => {
-        setGroup({});
         usersGroups = response.data;
         setUserGroups(usersGroups);
       })

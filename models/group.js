@@ -13,7 +13,7 @@ const groupSchema = new Schema(
         ref: "Event",
       },
     ],
-    users: [],
+    users: { prevUsers: [], newUser: {} },
     user: {},
   },
   {

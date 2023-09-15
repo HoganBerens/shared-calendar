@@ -11,7 +11,11 @@ function ShowGroup() {
   const location = useLocation();
   const navigate = useNavigate();
   const selectedGroup = location.state.group;
-  const users = selectedGroup.users;
+  selectedGroup.users.newUser && selectedGroup.users.prevUsers.push(selectedGroup.users.newUser);
+  const users = selectedGroup.users.prevUsers;
+  console.log(users);
+
+  console.log(users);
   let { id } = useParams();
 
   const handleSearchUsers = async (event) => {
@@ -41,6 +45,11 @@ function ShowGroup() {
   return (
     <div>
       <div>Group: {selectedGroup.title}</div>
+      <div>Owner: {selectedGroup.user.name}</div>
+      <div>
+        Members:
+        {selectedGroup.users.prevUsers.length ? selectedGroup.users.prevUsers.map((user, index) => <div key={index}>{}</div>) : <div>No Users Yet</div>}
+      </div>
       <div>Add Users to Group</div>
       <form onSubmit={handleSearchUsers}>
         <input placeholder="Seach for a user by name" type="text" onChange={(e) => setName(e.target.value)} />
