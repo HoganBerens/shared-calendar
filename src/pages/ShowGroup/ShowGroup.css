@@ -1,0 +1,25 @@
+.showGroup-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.showGroup-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--tan-1);
+  height: 50%;
+  width: 40%;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 22px;
+}
+.showGroup-title {
+  margin: 20px;
+  font-size: 30px;
+}

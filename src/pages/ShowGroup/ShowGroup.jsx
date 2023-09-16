@@ -43,29 +43,32 @@ function ShowGroup() {
   };
 
   return (
-    <div>
-      <div>Group: {selectedGroup.title}</div>
-      <div>Owner: {selectedGroup.user.name}</div>
-      <div>
-        Members:
-        {selectedGroup.users.prevUsers.length ? selectedGroup.users.prevUsers.map((user, index) => <div key={index}>{}</div>) : <div>No Users Yet</div>}
-      </div>
-      <div>Add Users to Group</div>
-      <form onSubmit={handleSearchUsers}>
-        <input placeholder="Seach for a user by name" type="text" onChange={(e) => setName(e.target.value)} />
-        <button type="submit">Add User</button>
-      </form>
-      {searchResults.length ? (
+    <div className="showGroup-wrapper">
+      <div className="showGroup-container">
+        <div className="showGroup-title">Group Details</div>
+        <div>Group: {selectedGroup.title}</div>
+        <div>Owner: {selectedGroup.user.name}</div>
         <div>
-          {searchResults.map((user, index) => (
-            <div key={index} onClick={handleAddToGroup.bind(this, user)}>
-              {user.name}
-            </div>
-          ))}
+          Members:
+          {selectedGroup.users.prevUsers.length ? selectedGroup.users.prevUsers.map((user, index) => <div key={index}>{}</div>) : <div>No Users Yet</div>}
         </div>
-      ) : (
-        <div>No Users Found</div>
-      )}
+        <div>Add Users to Group</div>
+        <form onSubmit={handleSearchUsers}>
+          <input placeholder="Seach for a user by name" type="text" onChange={(e) => setName(e.target.value)} />
+          <button type="submit">Add User</button>
+        </form>
+        {searchResults.length ? (
+          <div>
+            {searchResults.map((user, index) => (
+              <div key={index} onClick={handleAddToGroup.bind(this, user)}>
+                {user.name}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>No Users Found</div>
+        )}
+      </div>
     </div>
   );
 }
