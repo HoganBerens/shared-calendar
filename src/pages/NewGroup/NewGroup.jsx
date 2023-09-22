@@ -24,7 +24,6 @@ const NewGroup = ({ user, setGroup, usersGroups }) => {
   const handleSelectGroup = (group) => {
     setGroup(group);
     navigate(`/groups/${group._id}`, { state: { group: group } });
-    console.log(group);
   };
 
   useEffect(() => {

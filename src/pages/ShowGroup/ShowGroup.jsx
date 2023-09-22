@@ -11,11 +11,7 @@ function ShowGroup() {
   const location = useLocation();
   const navigate = useNavigate();
   const selectedGroup = location.state.group;
-  selectedGroup.users.newUser && selectedGroup.users.prevUsers.push(selectedGroup.users.newUser);
-  const users = selectedGroup.users.prevUsers;
-  console.log(users);
-
-  console.log(users);
+  const users = selectedGroup.users;
   let { id } = useParams();
 
   const handleSearchUsers = async (event) => {
