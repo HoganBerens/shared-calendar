@@ -14,7 +14,7 @@ const NewEvent = ({ user }) => {
   };
 
   return (
-    <div className="newEvent-wrapper">
+    <div data-testid="newEvent" className="newEvent-wrapper">
       <div className="newEvent-container">
         <h1>New Event</h1>
         <form className="newEvent-form" onSubmit={handleNewEvent} action="/events">
