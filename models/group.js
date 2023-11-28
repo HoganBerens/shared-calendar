@@ -14,7 +14,7 @@ const groupSchema = new Schema(
       },
     ],
     users: { prevUsers: [], newUser: {} },
-    user: [],
+    user: {},
   },
   {
     timestamps: true,

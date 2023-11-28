@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { config } from "../../utilities/configs";
 import { useParams, useNavigate } from "react-router-dom";
 
-const NewGroup = ({ user, setGroup, usersGroups }) => {
+const NewGroup = ({ user, setGroup, groups }) => {
   const [userGroups, setUserGroups] = useState([]);
+  const [toggle, setToggle] = useState(Boolean);
   let navigate = useNavigate();
 
   const Group_BASE_URL = "/groups";
@@ -14,9 +15,8 @@ const NewGroup = ({ user, setGroup, usersGroups }) => {
     event.preventDefault();
     axios
       .post(Group_BASE_URL, { title: event.target[0].value, user: user }, config)
-      .then((response) => {
-        usersGroups.push(response);
-        setUserGroups(usersGroups);
+      .then(() => {
+        getGroups();
       })
       .catch((error) => console.log(error));
   };
@@ -26,17 +26,20 @@ const NewGroup = ({ user, setGroup, usersGroups }) => {
     navigate(`/groups/${group._id}`, { state: { group: group } });
   };
 
-  useEffect(() => {
+  const getGroups = () => {
     axios
       .get(`/groups/${user.userID}`)
       .then((response) => {
-        usersGroups = response.data;
-        setUserGroups(usersGroups);
+        setUserGroups(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [usersGroups]);
+  };
+
+  useEffect(() => {
+    getGroups();
+  }, [groups]);
 
   return (
     <div className="newGroup-wrapper">

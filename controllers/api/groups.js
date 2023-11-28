@@ -3,27 +3,22 @@ const User = require("../../models/user");
 
 async function create(req, res) {
   let user = await User.findById(req.body.user._id);
-  let group;
-  Group.create({
+  let group = await Group.create({
     title: req.body.title,
-    user: user,
-  })
-    .then((people) => {
-      people.users.push(user);
-      people.save();
-      group = people.toJSON();
-    })
-    .then(() => {
-      user.groups.push(group);
-      user.save();
-    });
+    user: user.userID,
+  }).then((response) => {
+    user.groups.push(response._id);
+    user.save();
+  });
   res.send(group);
 }
 
 async function getAll(req, res) {
-  User.find({ userID: req.params.id })
+  User.findOne({ userID: req.params.id })
     .then((user) => {
-      res.send(user[0].groups);
+      Group.find({ user: user.userID }).then((response) => {
+        res.send(response);
+      });
     })
     .catch((error) => {
       console.log({ error });

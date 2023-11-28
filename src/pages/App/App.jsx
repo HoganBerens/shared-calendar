@@ -17,7 +17,7 @@ export default function App() {
   const [group, setGroup] = useState();
   const [event, setEvent] = useState();
   const [userGroups, setUserGroups] = useState([]);
-  let usersGroups = [];
+  let groups = [];
 
   return (
     <main className="App">
@@ -30,7 +30,7 @@ export default function App() {
             <Route path="/event" element={<ShowEvent event={event} setEvent={setEvent} />} />
             <Route path="/events/:id/edit" element={<EditEvent user={user} setEvent={setEvent} event={event} />} />
             <Route path="/events/:id/delete" element={<DeleteEvent user={user} setEvent={setEvent} event={event} />} />
-            <Route path="/groups" element={<NewGroup user={user} setGroup={setGroup} usersGroups={usersGroups} userGroups={userGroups} setUserGroups={setUserGroups} />} />
+            <Route path="/groups" element={<NewGroup user={user} setGroup={setGroup} groups={groups} userGroups={userGroups} setUserGroups={setUserGroups} />} />
             <Route path="/groups/:id" element={<ShowGroup user={user} group={group} />} />
           </Routes>
         </>
