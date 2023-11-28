@@ -1,6 +1,6 @@
 import React from "react";
 import NewEvent from "./NewEvent";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 test("Render the NewEvent component", () => {
   render(<NewEvent />);
