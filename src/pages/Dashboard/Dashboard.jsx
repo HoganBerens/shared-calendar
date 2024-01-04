@@ -19,7 +19,7 @@ const Dashboard = ({ user, setEvent }) => {
 
   useEffect(() => {
     axios
-      .get(`/events/${user.userID}`)
+      .get(`/events/${user._id}`)
       .then((response) => {
         userEvents = response.data;
         setEvents(userEvents);

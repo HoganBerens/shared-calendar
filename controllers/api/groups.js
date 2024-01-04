@@ -5,42 +5,40 @@ async function create(req, res) {
   let user = await User.findById(req.body.user._id);
   let group = await Group.create({
     title: req.body.title,
-    user: user.userID,
-  }).then((response) => {
-    user.groups.push(response._id);
-    user.save();
+    users: [user],
+    user: user,
   });
   res.send(group);
 }
 
 async function getAll(req, res) {
-  User.findOne({ userID: req.params.id })
-    .then((user) => {
-      Group.find({ user: user.userID }).then((response) => {
-        res.send(response);
-      });
-    })
-    .catch((error) => {
-      console.log({ error });
-    });
+  let groups = await Group.find({ users: req.params.id });
+  res.send(groups);
 }
 
 async function show(req, res) {
-  let group = await Group.find({ group: req.params.id }).exec();
-  res.send(group);
+  let group = await Group.findOne({ _id: req.params.id }).lean().exec();
+  let users = [];
+  for (let i = 0; i < group.users.length; i++) {
+    let person = await User.findOne({ _id: group.users[i] }).lean().exec();
+    users.push(person);
+  }
+  let user = await User.findOne({ _id: group.user._id }).lean().exec();
+  let data = { group: group, user: user, users: users };
+  res.send(data);
 }
 
 async function addUser(req, res) {
-  Group.findById(req.params.id)
-    .then((group) => {
-      /* group.users.push(req.body.user);
-      group.save();
-      res.json(group); */
-      console.log(group);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  let group;
+  let user;
+  await Group.findById(req.body.group).then((response) => {
+    group = response;
+  });
+  await User.findById(req.body.user).then((response) => {
+    user = response;
+  });
+  group.users.push(user);
+  group.save();
 }
 
 module.exports = {

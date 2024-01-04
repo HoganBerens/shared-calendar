@@ -9,16 +9,10 @@ const eventSchema = new Schema(
     content: {
       type: String,
     },
-    groups: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Group",
-      },
-    ],
     startDate: {},
     endDate: {},
     time: { type: String },
-    user: { type: Number },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,

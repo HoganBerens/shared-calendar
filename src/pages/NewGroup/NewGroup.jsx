@@ -2,7 +2,7 @@ import "./NewGroup.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { config } from "../../utilities/configs";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NewGroup = ({ user, setGroup, groups }) => {
   const [userGroups, setUserGroups] = useState([]);
@@ -19,16 +19,24 @@ const NewGroup = ({ user, setGroup, groups }) => {
         getGroups();
       })
       .catch((error) => console.log(error));
+    event.target[0].value = "";
   };
 
   const handleSelectGroup = (group) => {
-    setGroup(group);
-    navigate(`/groups/${group._id}`, { state: { group: group } });
+    axios
+      .get(`/groups/${group._id}/show`)
+      .then((response) => {
+        setGroup(response.data.group);
+        navigate(`/groups/${group._id}`, { state: { group: group, user: response.data.user, users: response.data.users } });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const getGroups = () => {
     axios
-      .get(`/groups/${user.userID}`)
+      .get(`/groups/${user._id}`)
       .then((response) => {
         setUserGroups(response.data);
       })

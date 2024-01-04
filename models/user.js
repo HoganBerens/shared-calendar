@@ -20,17 +20,6 @@ const userSchema = new Schema(
       minLength: 3,
       required: true,
     },
-    groups: {
-      type: Array,
-      required: true,
-    },
-
-    events: {
-      type: Array,
-      required: true,
-    },
-
-    userID: { type: Number },
   },
   {
     timestamps: true,

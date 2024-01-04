@@ -9,9 +9,11 @@ function ShowGroup() {
   const [searchResults, setSearchResults] = useState([]);
   const [name, setName] = useState("");
   const location = useLocation();
-  const navigate = useNavigate();
-  const selectedGroup = location.state.group;
-  const users = selectedGroup.users;
+  let selectedGroup = location.state.group;
+  let selectedUser = location.state.user;
+  let groupUsers = location.state.users;
+  let navigate = useNavigate();
+
   let { id } = useParams();
 
   const handleSearchUsers = async (event) => {
@@ -28,14 +30,27 @@ function ShowGroup() {
       .catch((err) => console.log(err));
   };
 
-  const handleAddToGroup = (user) => {
+  const getGroup = (group) => {
+    axios.get(`/groups/${group._id}/show`).then((response) => {
+      selectedGroup = response;
+    });
+  };
+
+  const handleAddToGroup = (user, group, groupUsers, event) => {
     axios
-      .put(`/groups/${id}/addUser`, { user: user, users: users }, config)
-      .then((response) => {
-        console.log(response);
+      .put(
+        `/groups/${id}/addUser`,
+        {
+          user: user._id,
+          group: group._id,
+          users: groupUsers,
+        },
+        config
+      )
+      .then(() => {
+        navigate(`/groups`);
       })
       .catch((error) => console.log(error));
-    navigate(-1);
   };
 
   return (
@@ -43,20 +58,21 @@ function ShowGroup() {
       <div className="showGroup-container">
         <div className="showGroup-title">Group Details</div>
         <div>Group: {selectedGroup.title}</div>
-        <div>Owner: {selectedGroup.user.name}</div>
+        <div>Owner: {selectedUser.name}</div>
+        <div>Date Created: {selectedGroup.createdAt.split("T")[0]}</div>
         <div>
           Members:
-          {selectedGroup.users.prevUsers.length ? selectedGroup.users.prevUsers.map((user, index) => <div key={index}>{}</div>) : <div>No Users Yet</div>}
+          {groupUsers.length ? groupUsers.map((user, index) => <div key={index}>{user.name}</div>) : <div>No Users in Group</div>}
         </div>
         <div>Add Users to Group</div>
         <form onSubmit={handleSearchUsers}>
           <input placeholder="Seach for a user by name" type="text" onChange={(e) => setName(e.target.value)} />
-          <button type="submit">Add User</button>
+          <button type="submit">Search</button>
         </form>
         {searchResults.length ? (
           <div>
             {searchResults.map((user, index) => (
-              <div key={index} onClick={handleAddToGroup.bind(this, user)}>
+              <div key={index} onClick={handleAddToGroup.bind(this, user, selectedGroup, groupUsers)}>
                 {user.name}
               </div>
             ))}

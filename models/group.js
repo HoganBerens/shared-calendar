@@ -7,14 +7,8 @@ const groupSchema = new Schema(
       type: String,
       required: true,
     },
-    events: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Event",
-      },
-    ],
-    users: { prevUsers: [], newUser: {} },
-    user: {},
+    users: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    user: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,
