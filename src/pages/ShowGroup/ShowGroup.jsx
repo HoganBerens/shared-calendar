@@ -37,20 +37,16 @@ function ShowGroup() {
   };
 
   const handleAddToGroup = (user, group, groupUsers, event) => {
-    axios
-      .put(
-        `/groups/${id}/addUser`,
-        {
-          user: user._id,
-          group: group._id,
-          users: groupUsers,
-        },
-        config
-      )
-      .then(() => {
-        navigate(`/groups`);
-      })
-      .catch((error) => console.log(error));
+    axios.put(
+      `/groups/${id}/addUser`,
+      {
+        user: user._id,
+        group: group._id,
+        users: groupUsers,
+      },
+      config
+    );
+    navigate(`/groups`);
   };
 
   return (

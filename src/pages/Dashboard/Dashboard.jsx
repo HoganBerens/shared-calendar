@@ -1,36 +1,67 @@
-import { useEffect, useState, React } from "react";
+import { React } from "react";
 import "./Dashboard.css";
 import moment from "moment";
-import axios from "axios";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Dashboard = ({ user, setEvent }) => {
+const Dashboard = (props) => {
+  let groups = props.groups;
+  let user = props.user;
+  let setEvent = props.setEvent;
+  let setEvents = props.setEvents;
   const navigate = useNavigate();
-  const [events, setEvents] = useState();
+  let events = props.events;
   const localizer = momentLocalizer(moment);
-  let userEvents;
 
   const handleSelectEvent = (event) => {
     setEvent(event);
     navigate("/event", { state: { user: user } });
   };
 
-  useEffect(() => {
+  const handleGetYourEvents = () => {
     axios
       .get(`/events/${user._id}`)
       .then((response) => {
-        userEvents = response.data;
-        setEvents(userEvents);
+        setEvents(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [userEvents]);
+  };
+
+  const handleGetEvents = (event) => {
+    axios
+      .get(`/events/${user._id}/${event.target.value}`)
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
+      <div style={{ display: "flex" }}>
+        <div>
+          {groups.length ? (
+            <div style={{ display: "flex" }}>
+              <div>Filter Events By Group</div>
+              <select onChange={handleGetEvents}>
+                <option placeholder="" hidden={true} />
+                {groups.map((group, groupIndex) => (
+                  <option key={groupIndex}>{group.title}</option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <button onClick={handleGetYourEvents}>Show Your Events</button>
+      </div>
       <Calendar localizer={localizer} events={events} startAccessor="startDate" endAccessor="endDate" style={{ height: 900 }} onSelectEvent={handleSelectEvent} />
     </div>
   );

@@ -1,9 +1,9 @@
 const Event = require("../../models/event");
+const Group = require("../../models/group");
 const User = require("../../models/user");
-const moment = require("moment");
 
 async function create(req, res) {
-  const event = await Event.create({
+  let event = await Event.create({
     title: req.body.title,
     content: req.body.content,
     startDate: req.body.startDate,
@@ -11,7 +11,16 @@ async function create(req, res) {
     time: req.body.time,
     user: req.body.user,
   });
-  res.json(event);
+  await Group.findOne({ title: req.body.group })
+    .then((response) => {
+      response.events.push(event);
+      response.save();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  let events = await Event.find({ user: req.body.user._id });
+  res.send(events);
 }
 
 async function edit(req, res) {
@@ -29,9 +38,20 @@ async function showAll(req, res) {
   res.send(usersEvents || []);
 }
 
+async function getByGroup(req, res) {
+  let group = await Group.findOne({ title: req.params.group }).lean().exec();
+  let events = [];
+  for (e of group.events) {
+    let event = await Event.findById(e).lean();
+    events.push(event);
+  }
+  res.send(events);
+}
+
 module.exports = {
   create,
   showAll,
   edit,
   delete: deleteOne,
+  getByGroup,
 };

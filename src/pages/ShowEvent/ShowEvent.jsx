@@ -1,7 +1,11 @@
 import "./ShowEvent.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function ShowEvent({ event, setEvent }) {
+function ShowEvent(props) {
+  let event = props.event;
+  let setEvent = props.setEvent;
+  let groups = props.groups;
   const location = useLocation();
   let user = location.state.user;
   const navigate = useNavigate();
@@ -14,6 +18,12 @@ function ShowEvent({ event, setEvent }) {
   const handleDeleteEvent = () => {
     setEvent(event);
     navigate(`/events/${event._id}/delete`);
+  };
+  const handleSelectGroup = (e) => {
+    axios.put(`/groups/addEvent/${e.target.value}`, { event: event._id }).catch((err) => {
+      console.log(err);
+    });
+    navigate(-1);
   };
 
   return (
@@ -34,6 +44,19 @@ function ShowEvent({ event, setEvent }) {
         <div className="showEvent-item-wrapper">
           <div className="showEvent-item">Time: {event.time}</div>
         </div>
+        {groups.length ? (
+          <div>
+            <span>Add to Group</span>
+            <select onChange={handleSelectGroup}>
+              <option placeholder="" hidden={true} />
+              {groups.map((group, groupIndex) => (
+                <option key={groupIndex}>{group.title}</option>
+              ))}
+            </select>
+          </div>
+        ) : (
+          <div></div>
+        )}
         <div className="showEvent-item-wrapper">
           <div className="showEvent-item" onClick={handleEditEvent}>
             Edit

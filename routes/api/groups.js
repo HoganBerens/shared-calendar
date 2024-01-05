@@ -10,4 +10,6 @@ router.get("/:id/show", groupsCtrl.show);
 
 router.put("/:id/addUser", groupsCtrl.addUser);
 
+router.put("/addEvent/:id", groupsCtrl.addEvent);
+
 module.exports = router;

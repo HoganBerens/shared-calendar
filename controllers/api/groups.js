@@ -1,29 +1,30 @@
 const Group = require("../../models/group");
 const User = require("../../models/user");
+const Event = require("../../models/event");
 
 async function create(req, res) {
-  let user = await User.findById(req.body.user._id);
-  let group = await Group.create({
+  await Group.create({
     title: req.body.title,
-    users: [user],
-    user: user,
+    users: [req.body.user._id],
+    user: req.body.user._id,
   });
-  res.send(group);
+  let groups = await Group.find({ user: req.body.user._id }).lean().exec();
+  res.send(groups);
 }
 
 async function getAll(req, res) {
-  let groups = await Group.find({ users: req.params.id });
+  let groups = await Group.find({ users: req.params.id }).lean().exec();
   res.send(groups);
 }
 
 async function show(req, res) {
   let group = await Group.findOne({ _id: req.params.id }).lean().exec();
   let users = [];
-  for (let i = 0; i < group.users.length; i++) {
-    let person = await User.findOne({ _id: group.users[i] }).lean().exec();
+  for (u of group.users) {
+    let person = await User.findById(u).lean().exec();
     users.push(person);
   }
-  let user = await User.findOne({ _id: group.user._id }).lean().exec();
+  let user = await User.findById(group.user._id).lean().exec();
   let data = { group: group, user: user, users: users };
   res.send(data);
 }
@@ -41,9 +42,22 @@ async function addUser(req, res) {
   group.save();
 }
 
+async function addEvent(req, res) {
+  let event = await Event.findById(req.body.event);
+  await Group.findOne({ title: req.params.id })
+    .then((response) => {
+      response.events.push(event);
+      response.save();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 module.exports = {
   create,
   getAll,
   show,
   addUser,
+  addEvent,
 };

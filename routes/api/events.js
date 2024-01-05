@@ -8,6 +8,8 @@ router.put("/events/:id/edit", eventsCtrl.edit);
 
 router.get("/events/:id", eventsCtrl.showAll);
 
+router.get("/events/:id/:group", eventsCtrl.getByGroup);
+
 router.delete("/events/:id/delete", eventsCtrl.delete);
 
 module.exports = router;

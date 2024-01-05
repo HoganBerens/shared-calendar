@@ -7,6 +7,7 @@ const groupSchema = new Schema(
       type: String,
       required: true,
     },
+    events: [{ type: Schema.Types.ObjectId, ref: "Event" }],
     users: [{ type: Schema.Types.ObjectId, ref: "User" }],
     user: { type: Schema.Types.ObjectId, ref: "User" },
   },

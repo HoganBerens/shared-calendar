@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import AuthPage from "../AuthPage/AuthPage";
 import { Routes, Route } from "react-router-dom";
@@ -11,13 +11,39 @@ import ShowGroup from "../ShowGroup/ShowGroup";
 import ShowEvent from "../ShowEvent/ShowEvent";
 import EditEvent from "../EditEvent/EditEvent";
 import DeleteEvent from "../DeleteEvent/DeleteEvent";
+import axios from "axios";
 
 export default function App() {
+  const [events, setEvents] = useState();
   const [user, setUser] = useState(getUser());
   const [group, setGroup] = useState();
+  const [groups, setGroups] = useState([]);
   const [event, setEvent] = useState();
   const [userGroups, setUserGroups] = useState([]);
-  let groups = [];
+
+  useEffect(() => {
+    user &&
+      axios
+        .get(`/events/${user._id}`)
+        .then((response) => {
+          setEvents(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }, [user]);
+
+  useEffect(() => {
+    user &&
+      axios
+        .get(`/groups/${user._id}`)
+        .then((response) => {
+          setGroups(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }, [user]);
 
   return (
     <main className="App">
@@ -25,12 +51,12 @@ export default function App() {
         <>
           <NavBar user={user} setUser={setUser} />
           <Routes>
-            <Route path="/" element={<Dashboard user={user} setEvent={setEvent} />} />
-            <Route path="/newEvent" element={<NewEvent user={user} />} />
-            <Route path="/event" element={<ShowEvent event={event} setEvent={setEvent} />} />
+            <Route path="/" element={<Dashboard user={user} events={events} setEvent={setEvent} groups={groups} setEvents={setEvents} />} />
+            <Route path="/newEvent" element={<NewEvent setEvents={setEvents} groups={groups} user={user} />} />
+            <Route path="/event" element={<ShowEvent event={event} setEvent={setEvent} groups={groups} />} />
             <Route path="/events/:id/edit" element={<EditEvent user={user} setEvent={setEvent} event={event} />} />
             <Route path="/events/:id/delete" element={<DeleteEvent user={user} setEvent={setEvent} event={event} />} />
-            <Route path="/groups" element={<NewGroup user={user} setGroup={setGroup} groups={groups} userGroups={userGroups} setUserGroups={setUserGroups} />} />
+            <Route path="/groups" element={<NewGroup user={user} setGroup={setGroup} groups={groups} setGroups={setGroups} userGroups={userGroups} setUserGroups={setUserGroups} />} />
             <Route path="/groups/:id" element={<ShowGroup user={user} group={group} />} />
           </Routes>
         </>

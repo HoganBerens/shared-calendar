@@ -4,19 +4,19 @@ import { useEffect, useState } from "react";
 import { config } from "../../utilities/configs";
 import { useNavigate } from "react-router-dom";
 
-const NewGroup = ({ user, setGroup, groups }) => {
-  const [userGroups, setUserGroups] = useState([]);
-  const [toggle, setToggle] = useState(Boolean);
+const NewGroup = (props) => {
+  let user = props.user;
+  let setGroup = props.setGroup;
+  let groups = props.groups;
+  let setGroups = props.setGroups;
   let navigate = useNavigate();
-
-  const Group_BASE_URL = "/groups";
 
   const handleNewGroup = (event) => {
     event.preventDefault();
     axios
-      .post(Group_BASE_URL, { title: event.target[0].value, user: user }, config)
-      .then(() => {
-        getGroups();
+      .post("groups", { title: event.target[0].value, user: user }, config)
+      .then((response) => {
+        setGroups(response.data);
       })
       .catch((error) => console.log(error));
     event.target[0].value = "";
@@ -34,21 +34,6 @@ const NewGroup = ({ user, setGroup, groups }) => {
       });
   };
 
-  const getGroups = () => {
-    axios
-      .get(`/groups/${user._id}`)
-      .then((response) => {
-        setUserGroups(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  useEffect(() => {
-    getGroups();
-  }, [groups]);
-
   return (
     <div className="newGroup-wrapper">
       <div className="newGroup-container">
@@ -60,8 +45,8 @@ const NewGroup = ({ user, setGroup, groups }) => {
         <br />
         <br />
         <div>Groups:</div>
-        {userGroups.length ? (
-          userGroups.map((group, index) => (
+        {groups.length ? (
+          groups.map((group, index) => (
             <div onClick={handleSelectGroup.bind(this, group)} key={index}>
               <span>{group.title}</span>
             </div>
