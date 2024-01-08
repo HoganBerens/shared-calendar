@@ -34,12 +34,12 @@ async function deleteOne(req) {
 }
 
 async function showAll(req, res) {
-  let usersEvents = await Event.find({ user: req.params.id }).exec();
+  let usersEvents = await Event.find({ user: req.params.id });
   res.send(usersEvents || []);
 }
 
 async function getByGroup(req, res) {
-  let group = await Group.findOne({ title: req.params.group }).lean().exec();
+  let group = await Group.findOne({ title: req.params.group }).lean();
   let events = [];
   for (e of group.events) {
     let event = await Event.findById(e).lean();
@@ -48,10 +48,19 @@ async function getByGroup(req, res) {
   res.send(events);
 }
 
+async function getOne(req, res) {
+  Event.findById(req.params.id).then((response) => {
+    User.findById(response.user).then((r) => {
+      res.send({ user: r, event: response });
+    });
+  });
+}
+
 module.exports = {
   create,
   showAll,
   edit,
   delete: deleteOne,
   getByGroup,
+  getOne,
 };

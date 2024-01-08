@@ -1,23 +1,19 @@
-import { React } from "react";
+import { React, useContext } from "react";
 import "./Dashboard.css";
 import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Dashboard = (props) => {
   let groups = props.groups;
   let user = props.user;
-  let setEvent = props.setEvent;
   let setEvents = props.setEvents;
-  const navigate = useNavigate();
   let events = props.events;
   const localizer = momentLocalizer(moment);
 
-  const handleSelectEvent = (event) => {
-    setEvent(event);
-    navigate("/event", { state: { user: user } });
+  const handleSelectEvent = (e) => {
+    window.location.href = `/event/${e._id}`;
   };
 
   const handleGetYourEvents = () => {
@@ -31,9 +27,9 @@ const Dashboard = (props) => {
       });
   };
 
-  const handleGetEvents = (event) => {
+  const handleGetEvents = (e) => {
     axios
-      .get(`/events/${user._id}/${event.target.value}`)
+      .get(`/events/${user._id}/${e.target.value}`)
       .then((response) => {
         setEvents(response.data);
       })
