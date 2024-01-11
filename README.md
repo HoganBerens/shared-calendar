@@ -1,6 +1,6 @@
 # Shared-Calendar
 
-Shared-Calendar is a functioning calendar where you can store your previous and upcoming events in one place. 
+Shared-Calendar is an application built to help you keep track of your busy schedule. You can create groups and add other users to stay up-to-date with your friends' and families' events. Click the URL below to visit the deployed application and create an account to get started!  
 
 Screenshots
 <img src="https://i.imgur.com/cexZro6.png">
@@ -10,6 +10,7 @@ Screenshots
 
 # Technologies Used
 
+- Node.js
 - Express
 - Mongoose
 - React
@@ -26,6 +27,5 @@ Screenshots
 
 # Next Steps
 
-- Add ability for users to add other users to groups 
-- Allow all users in a group to see the events of the others in group
+- Reach at least 80% code test coverage
 - Add responsive style so Shared-Calendar can be enjoyed on all screens
